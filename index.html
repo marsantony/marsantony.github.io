@@ -32,6 +32,10 @@
     <br />
     <input type="button" id="autoReply" value="開始自動回覆" />
 
+    <div>回覆的LOG：</div>
+    <div id="LOG">
+        
+    </div>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
@@ -58,7 +62,7 @@
                     // 3. You will get a password beginning with "oath..."
                     // 4. Copy the whole password and paste inside the 'genereated_oath_password'
                 },
-                channels: ['shuteye_orange'] // [TODO]: input the channel name you want to listen to
+                channels: ['marsantonymars'] // [TODO]: input the channel name you want to listen to
             });
 
             client.connect().catch(console.error);
@@ -80,9 +84,14 @@
                             currentGameName = '';
                             currentGameName = json['response']['players'][0]['gameextrainfo'] || document.getElementById('gameName').value;
 
-                            if (currentGameName)
-                                client.say(channel, `MrDestructoid 自動回覆：「遊戲：${currentGameName}」`);
-                                //client.reply('marsantonymars', `MrDestructoid 自動回覆：「遊戲：${currentGameName}」`, tags ); v1.9.0-pre.1
+                            if (currentGameName) {
+                                const replyMessage = `MrDestructoid 自動回覆：「遊戲：${currentGameName}」`;
+                                client.say(channel, replyMessage);
+                                //client.reply(channel, replyMessage, tags ); v1.9.0-pre.1
+
+                                var name = tags['display-name'] ? `${tags['display-name']}(${tags['username']})` : tags['username'];
+                                document.getElementById('LOG').innerHTML += `<div>${name}：${replyMessage}</div>`;
+                            }
                         });
                 }
             });
