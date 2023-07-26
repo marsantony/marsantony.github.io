@@ -77,6 +77,7 @@
                             return response.json();
                         }).then((json) => {
                             console.log(json);
+                            currentGameName = '';
                             currentGameName = json['response']['players'][0]['gameextrainfo'] || document.getElementById('gameName').value;
                         });
 
