@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <title></title>
+</head>
+
+<body>
+
+    <input type="text" id="username" />
+    <input type="password" id="password" />
+
+    <input type="text" id="gameName" />
+
+    <input type="button" id="setGameName" value="設定遊戲名稱" />
+
+
+    <input type="button" id="autoReply" value="開始自動回覆" />
+
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="https://github.com/tmijs/tmi.js/releases/download/v1.8.5/tmi.min.js"></script>
+
+    <script>
+
+        document.getElementById('autoReply').addEventListener('click', (e) => {
+            const client = new tmi.Client({
+                options: {
+                    debug: false,
+                    skipMembership: true, // 不接收 JOIN/PART 訊息
+                    skipUpdatingEmotesets: true,
+                },
+                connection: {
+                    reconnect: true,
+                    secure: true
+                },
+                identity: {
+                    username: document.getElementById('username').value,            // [TODO]: input your Twitch username
+                    password: document.getElementById('password').value        // [TODO]: input the genereated oath password
+                    // 1. go to https://twitchapps.com/tmi/
+                    // 2. click "Connect"
+                    // 3. You will get a password beginning with "oath..."
+                    // 4. Copy the whole password and paste inside the 'genereated_oath_password'
+                },
+                channels: ['marsantonymars'] // [TODO]: input the channel name you want to listen to
+            });
+
+            client.connect().catch(console.error);
+
+            client.on('message', (channel, tags, message, self) => {
+
+                // this part is to skip the message sent by you,
+                // or it will be prone to cause infinite loop
+                if (self) {
+                    console.log(self);
+                    //return;
+                }
+
+                // Here is the example of detecting a "hello" in a message
+                // I first turn message to lower case and then check if the message includes "hello" in it
+                // This can then detect "Hello", "hELLO", "HELLO" ... etc. variation of capitalization in the message
+                if (message.toLowerCase().includes("hello")) {
+
+                    // if the condition above is met, then send "hello" in the chat
+                    client.say(channel, "Hi!");
+                }
+
+            });
+        });
+      
+
+
+    </script>
+</body>
+
+</html>
