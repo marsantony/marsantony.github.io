@@ -79,11 +79,10 @@
                             console.log(json);
                             currentGameName = '';
                             currentGameName = json['response']['players'][0]['gameextrainfo'] || document.getElementById('gameName').value;
+
+                            if (currentGameName)
+                                client.say(channel, `自動回覆：「遊戲：${currentGameName}」`);
                         });
-
-
-                    if (currentGameName)
-                        client.say(channel, `自動回覆：「遊戲：${currentGameName}」`);
                 }
             });
         }, { once: true });
