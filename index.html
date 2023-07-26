@@ -21,10 +21,12 @@
     <input type="password" id="password" />
     <br />
 
-    <label for="gameName">遊戲名稱</label>
-    <input type="text" id="gameName" />
+    <label for="steamKey">Steam API KEY</label>
+    <input type="text" id="steamKey" />
+    <br />
 
-    <input type="button" id="setGameName" value="設定遊戲名稱" />
+    <label for="gameName">自訂遊戲名稱</label>
+    <input type="text" id="gameName" />
 
     <br />
     <input type="button" id="autoReply" value="開始自動回覆" />
@@ -35,7 +37,7 @@
     <script src="https://github.com/tmijs/tmi.js/releases/download/v1.8.5/tmi.min.js"></script>
 
     <script>
-
+        var currentGameName = '';
         document.getElementById('autoReply').addEventListener('click', (e) => {
             const client = new tmi.Client({
                 options: {
@@ -62,24 +64,27 @@
 
             client.on('message', (channel, tags, message, self) => {
 
-                // this part is to skip the message sent by you,
-                // or it will be prone to cause infinite loop
-                if (self) {
-                    console.log(self);
-                    //return;
+                if (self || !message.startsWith('!')) return;
+
+                const args = message.slice(1).split(' ');
+                const command = args.shift().toLowerCase();
+                //7C03DE1E0A68FCF5F6E5E0ED970FD0C3
+                if (command === '遊戲') {
+                    fetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${document.getElementById('steamKey').value}&format=json&steamids=76561198003344359`)
+                        .then((response) => {
+                            console.log(response);
+                            return response.json();
+                        }).then((json) => {
+                            console.log(json);
+                            currentGameName = json['response']['players'][0]['gameextrainfo'] || document.getElementById('gameName').value;
+                        });
+
+
+                    if (currentGameName)
+                        client.say(channel, `自動回覆：「遊戲：${currentGameName}」`);
                 }
-
-                // Here is the example of detecting a "hello" in a message
-                // I first turn message to lower case and then check if the message includes "hello" in it
-                // This can then detect "Hello", "hELLO", "HELLO" ... etc. variation of capitalization in the message
-                if (message.toLowerCase().includes("hello")) {
-
-                    // if the condition above is met, then send "hello" in the chat
-                    client.say(channel, "Hi!");
-                }
-
             });
-        });
+        }, { once: true });
 
 
 
