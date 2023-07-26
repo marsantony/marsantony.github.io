@@ -21,9 +21,10 @@
     <input type="password" id="password" />
     <br />
 
-    <label for="steamKey">Steam API KEY</label>
-    <input type="text" id="steamKey" />
+    <label for="azureFunctionKey">Azure Function Key</label>
+    <input type="text" id="azureFunctionKey" />
     <br />
+
 
     <label for="gameName">自訂遊戲名稱</label>
     <input type="text" id="gameName" />
@@ -70,7 +71,7 @@
                 const command = args.shift().toLowerCase();
                 //7C03DE1E0A68FCF5F6E5E0ED970FD0C3
                 if (command === '遊戲') {
-                    fetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${document.getElementById('steamKey').value}&format=json&steamids=76561198003344359`)
+                    fetch(`https://getorangesteamstatus.azurewebsites.net/api/Get?code=${document.getElementById('azureFunctionKey').value}`)
                         .then((response) => {
                             console.log(response);
                             return response.json();
