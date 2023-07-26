@@ -69,7 +69,7 @@
 
                 const args = message.slice(1).split(' ');
                 const command = args.shift().toLowerCase();
-                //7C03DE1E0A68FCF5F6E5E0ED970FD0C3
+                
                 if (command === '遊戲') {
                     fetch(`https://getorangesteamstatus.azurewebsites.net/api/Get?code=${document.getElementById('azureFunctionKey').value}`)
                         .then((response) => {
@@ -82,6 +82,7 @@
 
                             if (currentGameName)
                                 client.say(channel, `MrDestructoid 自動回覆：「遊戲：${currentGameName}」`);
+                                //client.reply('marsantonymars', `MrDestructoid 自動回覆：「遊戲：${currentGameName}」`, tags ); v1.9.0-pre.1
                         });
                 }
             });
