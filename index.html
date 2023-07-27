@@ -90,7 +90,8 @@
                                 //client.reply(channel, replyMessage, tags ); v1.9.0-pre.1
 
                                 var name = tags['display-name'] ? `${tags['display-name']}(${tags['username']})` : tags['username'];
-                                document.getElementById('LOG').innerHTML += `<div>${name}：${replyMessage}</div>`;
+                                var timeStamp = new Date(tags['tmi-sent-ts'] * 1).toLocaleString('sv-SE');
+                                document.getElementById('LOG').innerHTML += `<div>${timeStamp} ${name}：${replyMessage}</div>`;
                             }
                         });
                 }
