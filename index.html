@@ -36,6 +36,16 @@
     <input type="button" id="startReply" value="開始回覆" style="display:none;" />
     <input type="button" id="stopReply" value="停止回覆" style="display:none;" />
 
+    <div>
+        <label for="currentSteamGameName">steam抓到的目前遊戲名稱</label>
+        <span id="currentSteamGameName"></span>
+    </div>
+
+    <div>
+        <label for="currentCommandReplyGameName">目前遊戲指令的遊戲名稱</label>
+        <span id="currentCommandReplyGameName"></span>
+    </div>
+
     <div>回覆的LOG：</div>
     <div id="LOG">
 
@@ -54,7 +64,7 @@
         document.getElementById('username').value = localStorage.getItem(LOCALSTORAGE_USERNAME) || '';
         document.getElementById('password').value = localStorage.getItem(LOCALSTORAGE_PASSWORD) || '';
         //document.getElementById('azureFunctionKey').value = localStorage.getItem(LOCALSTORAGE_AZUREFUNCTIONKEY) || '';
-        
+
         var currentGameName = '';
         var isEnable = false;
         document.getElementById('autoReply').addEventListener('click', (e) => {
@@ -97,6 +107,7 @@
                 const args = message.slice(1).split(' ');
                 const command = args.shift().toLowerCase();
                 let replyGameName = /『(.+)』/gm.exec(message)[1];
+                document.getElementById('currentCommandReplyGameName').innerHTML = replyGameName;
 
                 if (command === '遊戲') {
                     //fetch(`https://getorangesteamstatus.azurewebsites.net/api/Get?code=${document.getElementById('azureFunctionKey').value}`)
@@ -106,6 +117,7 @@
                             return response.json();
                         }).then((json) => {
                             console.log(json);
+                            document.getElementById('currentSteamGameName').innerHTML = json['GameName'];
                             //清空
                             currentGameName = '';
                             //自訂遊戲名稱優先權較高
