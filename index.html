@@ -37,12 +37,12 @@
     <input type="button" id="stopReply" value="停止回覆" style="display:none;" />
 
     <div>
-        <label for="currentSteamGameName">steam抓到的目前遊戲名稱</label>
+        <label for="currentSteamGameName">steam抓到的目前遊戲名稱：</label>
         <span id="currentSteamGameName"></span>
     </div>
 
     <div>
-        <label for="currentCommandReplyGameName">目前遊戲指令的遊戲名稱</label>
+        <label for="currentCommandReplyGameName">目前遊戲指令的遊戲名稱：</label>
         <span id="currentCommandReplyGameName"></span>
     </div>
 
@@ -99,6 +99,10 @@
             //localStorage.setItem(LOCALSTORAGE_AZUREFUNCTIONKEY, document.getElementById('azureFunctionKey').value);
 
             client.on('message', (channel, tags, message, self) => {
+                if (tags.username === 'StreamElements' && message.includes('遊戲名稱(Game Title)')) {
+                    let replyGameName = /『(.+)』/gm.exec(message)[1];
+                    document.getElementById('currentCommandReplyGameName').innerHTML = replyGameName;
+                }
 
                 if (!isEnable) return;
 
@@ -106,8 +110,9 @@
 
                 const args = message.slice(1).split(' ');
                 const command = args.shift().toLowerCase();
-                let replyGameName = /『(.+)』/gm.exec(message)[1];
-                document.getElementById('currentCommandReplyGameName').innerHTML = replyGameName;
+
+
+                
 
                 if (command === '遊戲') {
                     //fetch(`https://getorangesteamstatus.azurewebsites.net/api/Get?code=${document.getElementById('azureFunctionKey').value}`)
