@@ -19,11 +19,12 @@
     <br />
     <label for="password">OAuth密碼</label>
     <input type="password" id="password" />
+    <a href="https://twitchapps.com/tmi/" target="_blank">Twitch取得oath password</a>
     <br />
 
-    <label for="azureFunctionKey">Azure Function Key</label>
+    <!--<label for="azureFunctionKey">Azure Function Key</label>
     <input type="text" id="azureFunctionKey" />
-    <br />
+    <br />-->
 
 
     <label for="gameName">自訂遊戲名稱</label>
@@ -97,7 +98,8 @@
                 const command = args.shift().toLowerCase();
 
                 if (command === '遊戲') {
-                    fetch(`https://getorangesteamstatus.azurewebsites.net/api/Get?code=${document.getElementById('azureFunctionKey').value}`)
+                    //fetch(`https://getorangesteamstatus.azurewebsites.net/api/Get?code=${document.getElementById('azureFunctionKey').value}`)
+                    fetch(`https://asia-east1-steamwebapi-394409.cloudfunctions.net/GetOrangeSteamStatus`)
                         .then((response) => {
                             console.log(response);
                             return response.json();
@@ -106,7 +108,7 @@
                             //清空
                             currentGameName = '';
                             //自訂遊戲名稱優先權較高
-                            currentGameName = document.getElementById('gameName').value || json['response']['players'][0]['gameextrainfo'];
+                            currentGameName = document.getElementById('gameName').value || json['GameName'];
 
                             if (currentGameName) {
                                 const replyMessage = `MrDestructoid 自動回覆：「目前遊戲名稱：${currentGameName}」`;
