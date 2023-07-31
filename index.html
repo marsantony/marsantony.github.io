@@ -96,6 +96,7 @@
 
                 const args = message.slice(1).split(' ');
                 const command = args.shift().toLowerCase();
+                let replyGameName = /『(.+)』/gm.exec(message)[1];
 
                 if (command === '遊戲') {
                     //fetch(`https://getorangesteamstatus.azurewebsites.net/api/Get?code=${document.getElementById('azureFunctionKey').value}`)
@@ -110,7 +111,7 @@
                             //自訂遊戲名稱優先權較高
                             currentGameName = document.getElementById('gameName').value || json['GameName'];
 
-                            if (currentGameName) {
+                            if (currentGameName && currentGameName !== replyGameName) {
                                 const replyMessage = `MrDestructoid 自動回覆：「目前遊戲名稱：${currentGameName}」`;
                                 client.say(channel, replyMessage);
                                 //client.reply(channel, replyMessage, tags ); v1.9.0-pre.1
