@@ -101,7 +101,8 @@
 
 
             client.on('message', (channel, tags, message, self) => {
-                if (tags.username === 'StreamElements' && message.includes('遊戲名稱(Game Title)')) {
+                //不知為啥streamelements的username小寫= =
+                if (tags.username.toLowerCase() === 'streamelements' && message.includes('遊戲名稱(Game Title)')) {
                     replyGameName = /『(.+)』/gm.exec(message)[1];
                     document.getElementById('currentCommandReplyGameName').innerHTML = replyGameName;
                 }
