@@ -48,12 +48,12 @@
     <script>
         const LOCALSTORAGE_USERNAME = 'TwitchAutoReply_UserName';
         const LOCALSTORAGE_PASSWORD = 'TwitchAutoReply_Password';
-        const LOCALSTORAGE_AZUREFUNCTIONKEY = 'TwitchAutoReply_AzureFunctionKey';
+        //const LOCALSTORAGE_AZUREFUNCTIONKEY = 'TwitchAutoReply_AzureFunctionKey';
 
         //將預設值帶入
         document.getElementById('username').value = localStorage.getItem(LOCALSTORAGE_USERNAME) || '';
         document.getElementById('password').value = localStorage.getItem(LOCALSTORAGE_PASSWORD) || '';
-        document.getElementById('azureFunctionKey').value = localStorage.getItem(LOCALSTORAGE_AZUREFUNCTIONKEY) || '';
+        //document.getElementById('azureFunctionKey').value = localStorage.getItem(LOCALSTORAGE_AZUREFUNCTIONKEY) || '';
         
         var currentGameName = '';
         var isEnable = false;
@@ -86,7 +86,7 @@
             //將預設值寫入localStorage
             localStorage.setItem(LOCALSTORAGE_USERNAME, document.getElementById('username').value);
             localStorage.setItem(LOCALSTORAGE_PASSWORD, document.getElementById('password').value);
-            localStorage.setItem(LOCALSTORAGE_AZUREFUNCTIONKEY, document.getElementById('azureFunctionKey').value);
+            //localStorage.setItem(LOCALSTORAGE_AZUREFUNCTIONKEY, document.getElementById('azureFunctionKey').value);
 
             client.on('message', (channel, tags, message, self) => {
 
