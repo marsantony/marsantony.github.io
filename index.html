@@ -9,160 +9,47 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
-    <title>Twitch自動回覆</title>
+    <title>首頁</title>
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="https://marsantony.github.io/">Mars Liu</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./TwitchSelfReply">Twitch自動回覆(用自己的帳號)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./Twitch_AutoGameStatusUpdate">蝦愛橘子的!遊戲指令更新</a>
+                    </li>
+                    
+                    <!--<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown link
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <label for="username">使用者帳號</label>
-    <input type="text" id="username" />
-    <br />
-    <label for="password">OAuth密碼</label>
-    <input type="password" id="password" />
-    <a href="https://twitchapps.com/tmi/" target="_blank">Twitch取得oath password</a>
-    <br />
-
-    <!--<label for="azureFunctionKey">Azure Function Key</label>
-    <input type="text" id="azureFunctionKey" />
-    <br />-->
-
-
-    <label for="gameName">自訂遊戲名稱</label>
-    <input type="text" id="gameName" />
-
-    <br />
-    <input type="button" id="autoReply" value="開始自動回覆" />
-
-    <input type="button" id="startReply" value="開始回覆" style="display:none;" />
-    <input type="button" id="stopReply" value="停止回覆" style="display:none;" />
-
-    <div>
-        <label for="currentSteamGameName">steam抓到的目前遊戲名稱：</label>
-        <span id="currentSteamGameName"></span>
-    </div>
-
-    <div>
-        <label for="currentCommandReplyGameName">目前遊戲指令的遊戲名稱：</label>
-        <span id="currentCommandReplyGameName"></span>
-    </div>
-
-    <div>回覆的LOG：</div>
-    <div id="LOG">
-
-    </div>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     <script src="https://github.com/tmijs/tmi.js/releases/download/v1.8.5/tmi.min.js"></script>
 
     <script>
-        const LOCALSTORAGE_USERNAME = 'TwitchAutoReply_UserName';
-        const LOCALSTORAGE_PASSWORD = 'TwitchAutoReply_Password';
-        //const LOCALSTORAGE_AZUREFUNCTIONKEY = 'TwitchAutoReply_AzureFunctionKey';
-
-        //將預設值帶入
-        document.getElementById('username').value = localStorage.getItem(LOCALSTORAGE_USERNAME) || '';
-        document.getElementById('password').value = localStorage.getItem(LOCALSTORAGE_PASSWORD) || '';
-        //document.getElementById('azureFunctionKey').value = localStorage.getItem(LOCALSTORAGE_AZUREFUNCTIONKEY) || '';
-
-        var currentGameName = '';
-        var replyGameName = '';
-        var isEnable = false;
-        document.getElementById('autoReply').addEventListener('click', (e) => {
-
-            const client = new tmi.Client({
-                options: {
-                    debug: false,
-                    skipMembership: true, // 不接收 JOIN/PART 訊息
-                    skipUpdatingEmotesets: true,
-                },
-                connection: {
-                    reconnect: true,
-                    secure: true
-                },
-                identity: {
-                    username: document.getElementById('username').value,            // [TODO]: input your Twitch username
-                    password: document.getElementById('password').value        // [TODO]: input the genereated oath password
-                    // 1. go to https://twitchapps.com/tmi/
-                    // 2. click "Connect"
-                    // 3. You will get a password beginning with "oath..."
-                    // 4. Copy the whole password and paste inside the 'genereated_oath_password'
-                },
-                channels: ['shuteye_orange'] // [TODO]: input the channel name you want to listen to
-            });
-
-            //成功連接
-            client.connect().catch(console.error);
-
-            //將預設值寫入localStorage
-            localStorage.setItem(LOCALSTORAGE_USERNAME, document.getElementById('username').value);
-            localStorage.setItem(LOCALSTORAGE_PASSWORD, document.getElementById('password').value);
-            //localStorage.setItem(LOCALSTORAGE_AZUREFUNCTIONKEY, document.getElementById('azureFunctionKey').value);
-
-
-            client.on('message', (channel, tags, message, self) => {
-                //不知為啥streamelements的username小寫= =
-                if (tags.username.toLowerCase() === 'streamelements' && message.includes('遊戲名稱(Game Title)')) {
-                    replyGameName = /『(.+)』/gm.exec(message)[1].trim();
-                    document.getElementById('currentCommandReplyGameName').innerHTML = replyGameName;
-                }
-
-                if (!isEnable) return;
-
-                if (self || !message.startsWith('!')) return;
-
-                const args = message.slice(1).split(' ');
-                const command = args.shift().toLowerCase();
-
-                if (command === '遊戲') {
-                    //fetch(`https://getorangesteamstatus.azurewebsites.net/api/Get?code=${document.getElementById('azureFunctionKey').value}`)
-                    fetch(`https://asia-east1-steamwebapi-394409.cloudfunctions.net/GetOrangeSteamStatus`)
-                        .then((response) => {
-                            console.log(response);
-                            return response.json();
-                        }).then((json) => {
-                            console.log(json);
-                            document.getElementById('currentSteamGameName').innerHTML = json['GameName'];
-                            //清空
-                            currentGameName = '';
-                            //自訂遊戲名稱優先權較高
-                            currentGameName = document.getElementById('gameName').value || json['GameName'];
-
-                            if (currentGameName && currentGameName !== replyGameName) {
-                                const replyMessage = `MrDestructoid 自動回覆：「目前遊戲名稱：${currentGameName}」`;
-                                client.say(channel, replyMessage);
-                                //client.reply(channel, replyMessage, tags ); v1.9.0-pre.1
-
-                                var name = tags['display-name'] ? `${tags['display-name']}(${tags['username']})` : tags['username'];
-                                var timeStamp = new Date(tags['tmi-sent-ts'] * 1).toLocaleString('sv-SE');
-                                document.getElementById('LOG').innerHTML += `<div>${timeStamp} ${name}：${replyMessage}</div>`;
-                            }
-                        });
-                }
-            });
-
-            document.getElementById('autoReply').style.display = 'none';
-            document.getElementById('startReply').style.display = 'none';
-            document.getElementById('stopReply').style.display = '';
-
-            document.getElementById('startReply').click();
-        });
-
-        document.getElementById('startReply').addEventListener('click', (e) => {
-            isEnable = true;
-
-            document.getElementById('autoReply').style.display = 'none';
-            document.getElementById('startReply').style.display = 'none';
-            document.getElementById('stopReply').style.display = '';
-        });
-
-        document.getElementById('stopReply').addEventListener('click', (e) => {
-            isEnable = false;
-
-            document.getElementById('autoReply').style.display = 'none';
-            document.getElementById('startReply').style.display = '';
-            document.getElementById('stopReply').style.display = 'none';
-        });
+       
     </script>
 </body>
 
