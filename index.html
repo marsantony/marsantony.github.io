@@ -51,8 +51,9 @@
 
     <div class="col-lg-4 col-sm-6">
         <div class="card">
-            <img class="card-img-top" src="" alt="Card image cap" id="test2">
-            
+            <a href="" download="Image1.jpg">
+                <img class="card-img-top" src="" alt="Card image cap" id="test2">
+            </a>
         </div>
     </div>
 
@@ -67,7 +68,8 @@
             useCORS:true,
         }).then( canvas => {
             debugger;
-            document.querySelector("#test2").src =  canvas.toDataURL();
+            let imageDOM = document.querySelector("#test2");
+            imageDOM.src = imageDOM.parentNode.href  =  canvas.toDataURL();
         });
     </script>
 </body>
