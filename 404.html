@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 | Mars Liu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/shared/nav.css">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito Sans', sans-serif;
+      background: #d4d7dd;
+      color: #5a5f6b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .error-code {
+      font-size: 6rem;
+      font-weight: 700;
+      color: #c0c3c9;
+      line-height: 1;
+      text-shadow: 4px 4px 8px #b0b3b9, -4px -4px 8px #f5f6f8;
+    }
+
+    .error-message {
+      font-size: 1.2rem;
+      color: #5a5f6b;
+      margin: 1rem 0 2rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      background: #d4d7dd;
+      color: #3a3f4a;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 4px 4px 8px #b0b3b9, -4px -4px 8px #f5f6f8;
+      transition: box-shadow 0.2s;
+    }
+
+    .back-link:hover {
+      box-shadow: inset 2px 2px 5px #b0b3b9, inset -2px -2px 5px #f5f6f8;
+    }
+  </style>
+</head>
+<body>
+  <div class="error-code">404</div>
+  <p class="error-message">找不到這個頁面</p>
+  <a class="back-link" href="/">&#8592; 回首頁</a>
+  <script src="/shared/nav.js"></script>
+</body>
+</html>

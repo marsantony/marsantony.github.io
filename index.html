@@ -1,88 +1,467 @@
-﻿<!DOCTYPE html>
-<html>
-
+<!DOCTYPE html>
+<html lang="zh-Hant">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mars Liu - .NET 軟體工程師的個人作品集與工具入口">
+  <title>Mars Liu | Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/shared/nav.css">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    body {
+      font-family: 'Nunito Sans', sans-serif;
+      background: #d4d7dd;
+      color: #5a5f6b;
+      line-height: 1.6;
+      padding-top: 56px;
+    }
 
-    <title>首頁</title>
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 4rem 0 3rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #3a3f4a;
+      margin-bottom: 0.25rem;
+    }
+
+    .hero .subtitle {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #5a5f6b;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero .bio {
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .hero .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .hero .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #d4d7dd;
+      color: #5a5f6b;
+      font-size: 1.2rem;
+      text-decoration: none;
+      box-shadow: 4px 4px 8px #b0b3b9, -4px -4px 8px #f5f6f8;
+      transition: box-shadow 0.2s, color 0.2s;
+    }
+
+    .hero .social-links a:hover {
+      box-shadow: inset 2px 2px 5px #b0b3b9, inset -2px -2px 5px #f5f6f8;
+      color: #3a3f4a;
+    }
+
+    /* ── Section ── */
+    .section {
+      padding: 3rem 0;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #3a3f4a;
+      margin-bottom: 2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #c0c3c9;
+    }
+
+    /* ── Skills ── */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .skill-tag {
+      padding: 0.6rem 1.25rem;
+      border-radius: 12px;
+      background: #d4d7dd;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #3a3f4a;
+      box-shadow: 3px 3px 6px #b0b3b9, -3px -3px 6px #f5f6f8;
+    }
+
+    /* ── Experience ── */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #c0c3c9;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 0.5rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #8a8f9a;
+      border: 2px solid #d4d7dd;
+      transform: translateX(-4px);
+    }
+
+    .timeline-item .period {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #8a8f9a;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-item .company {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #3a3f4a;
+      margin-bottom: 0.15rem;
+    }
+
+    .timeline-item .role {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #5a5f6b;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-item .desc {
+      font-size: 0.9rem;
+      color: #6a6f7b;
+    }
+
+    .timeline-item .affiliation {
+      font-size: 0.8rem;
+      color: #8a8f9a;
+    }
+
+    /* ── Projects ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      padding: 1.5rem;
+      border-radius: 16px;
+      background: #d4d7dd;
+      box-shadow: 6px 6px 12px #b0b3b9, -6px -6px 12px #f5f6f8;
+      transition: box-shadow 0.2s;
+    }
+
+    .project-card:hover {
+      box-shadow: 8px 8px 16px #a8abb1, -8px -8px 16px #f5f6f8;
+    }
+
+    .project-card .card-category {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #8a8f9a;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #3a3f4a;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-card p {
+      font-size: 0.85rem;
+      color: #6a6f7b;
+      margin-bottom: 1rem;
+    }
+
+    .project-card .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      background: #d4d7dd;
+      color: #5a5f6b;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      box-shadow: 3px 3px 6px #b0b3b9, -3px -3px 6px #f5f6f8;
+      transition: box-shadow 0.2s, color 0.2s;
+    }
+
+    .project-card .card-link:hover {
+      box-shadow: inset 2px 2px 4px #b0b3b9, inset -2px -2px 4px #f5f6f8;
+      color: #3a3f4a;
+    }
+
+    /* ── Education ── */
+    .education-item {
+      padding: 1.5rem;
+      border-radius: 16px;
+      background: #d4d7dd;
+      box-shadow: 6px 6px 12px #b0b3b9, -6px -6px 12px #f5f6f8;
+    }
+
+    .education-item h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #3a3f4a;
+      margin-bottom: 0.25rem;
+    }
+
+    .education-item .degree {
+      font-size: 0.9rem;
+      color: #5a5f6b;
+    }
+
+    .education-item .edu-period {
+      font-size: 0.8rem;
+      color: #8a8f9a;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      font-size: 0.8rem;
+      color: #8a8f9a;
+      border-top: 1px solid #c0c3c9;
+      margin-top: 2rem;
+    }
+
+    /* ── RWD ── */
+    @media (max-width: 768px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .hero h1 { font-size: 2rem; }
+    }
+
+    @media (max-width: 480px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero h1 { font-size: 1.6rem; }
+    }
+  </style>
 </head>
-
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="https://marsantony.github.io/">Mars Liu</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/TwitchSelfReply">Twitch自動回覆(用自己的帳號)</a>
-                    </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            蝦愛橘子相關
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="/Twitch_AutoGameStatusUpdate">!遊戲指令更新</a></li>
-                            <li><a class="dropdown-item" href="/Youtube_AutoVideosUpdate">!YT指令更新</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <a href="https://mymobibank.page.link/hF4P" class="cubre-m-button" id="lnk_MajorButtonLink">
-        <p>把握好機匯</p>
-    </a>
-
-    <div class="col-lg-4 col-sm-6" id="test1">
-        <div class="card">
-            <img class="card-img-top" src="https://jiimmysu.github.io/in-app-browser-test/287.jpg" alt="Card image cap" crossorigin="anonymous">
-            <div class="card-body">
-                <h4 class="card-title">儲存圖片功能測試</h4>
-                <p class="card-text">有些 in-app Browser 長按圖片時，不會跳出下載功能。</p>
-            </div>
-        </div>
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <h1>Mars Liu</h1>
+      <div class="subtitle">Software Engineer</div>
+      <p class="bio">
+        軟體工程師，專注 .NET 網站開發，超過 13 年實戰經驗。現於金融產業打造多項線上申辦服務。熱愛解決問題，能寫程式就絕不手動，工作之餘也喜歡做些自動化小工具讓生活更輕鬆。
+      </p>
+      <div class="social-links">
+        <a href="https://github.com/marsantony" target="_blank" rel="noopener" aria-label="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="mailto:marsantonymars1017@gmail.com" aria-label="Email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </div>
     </div>
+  </section>
 
-    <div class="col-lg-4 col-sm-6">
-        <div class="card">
-            <a href="" download="Image1.jpg">
-                <img class="card-img-top" src="" alt="Card image cap" id="test2">
-            </a>
-        </div>
+  <!-- Skills -->
+  <section class="section" id="skills">
+    <div class="container">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills-grid">
+        <span class="skill-tag">C#</span>
+        <span class="skill-tag">ASP.NET Web Forms</span>
+        <span class="skill-tag">ASP.NET MVC</span>
+        <span class="skill-tag">ASP.NET Web API</span>
+        <span class="skill-tag">ASP.NET Core</span>
+        <span class="skill-tag">jQuery</span>
+        <span class="skill-tag">MS SQL</span>
+        <span class="skill-tag">Git</span>
+      </div>
     </div>
+  </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/3.0.1/eruda.min.js" integrity="sha512-KkkY/3auRhaXDFzFMpwtZ+BrS8EBQ+GfiBxdJ9jGMi6Gg74/sYbq/IZpY593pkNjTmbeRfBwjpZo+7gcpH45Ww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>eruda.init();</script>
+  <!-- Experience -->
+  <section class="section" id="experience">
+    <div class="container">
+      <h2 class="section-title">Experience</h2>
+      <div class="timeline">
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-    <script src="https://github.com/tmijs/tmi.js/releases/download/v1.8.5/tmi.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <div class="timeline-item">
+          <div class="period">2017.07 ~ 現在</div>
+          <div class="company">國泰世華銀行<span class="affiliation">｜德義資訊派駐</span></div>
+          <div class="role">軟體工程師</div>
+          <div class="desc">負責行動版官網、信用卡申辦、線上分期、預約開戶、信用貸款等多項線上申辦系統開發</div>
+        </div>
 
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+        <div class="timeline-item">
+          <div class="period">2016.09 ~ 2017.06</div>
+          <div class="company">叡揚資訊</div>
+          <div class="role">軟體工程師</div>
+          <div class="desc">開發電子公文系統 SPEED 3.0</div>
+        </div>
 
+        <div class="timeline-item">
+          <div class="period">2015.10 ~ 2016.06</div>
+          <div class="company">Atos</div>
+          <div class="role">軟體工程師</div>
+          <div class="desc">開發燦星旅遊網 ERP 2.0</div>
+        </div>
 
+        <div class="timeline-item">
+          <div class="period">2014.07 ~ 2015.09</div>
+          <div class="company">大同</div>
+          <div class="role">軟體工程師</div>
+          <div class="desc">開發交通部鐵路管理局整合性策略成本管理資訊系統</div>
+        </div>
 
-    <script>
-        html2canvas(document.querySelector("#test1"), {
-            allowTaint: true,
-            useCORS: true,
-        }).then(canvas => {
-            debugger;
-            let imageDOM = document.querySelector("#test2");
-            imageDOM.src = imageDOM.parentNode.href = canvas.toDataURL();
-        });
-    </script>
+        <div class="timeline-item">
+          <div class="period">2013.08 ~ 2014.07</div>
+          <div class="company">昱勝資訊</div>
+          <div class="role">軟體工程師</div>
+          <div class="desc">維護現有系統與優化 Stored Procedure 效能</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="period">2013.02 ~ 2013.06</div>
+          <div class="company">互動資通</div>
+          <div class="role">軟體工程師</div>
+          <div class="desc">開發新北市政府簡訊平台及相關網站串接</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="period">2011.10 ~ 2013.01</div>
+          <div class="company">叡揚資訊<span class="affiliation">｜億力資訊派駐</span></div>
+          <div class="role">軟體工程師</div>
+          <div class="desc">開發行政院計畫管理資訊網，將 ASP 1.0 版本改寫為 ASP.NET</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="period">2010.11 ~ 2011.10</div>
+          <div class="company">文化大學推廣教育部</div>
+          <div class="role">資訊工程師</div>
+          <div class="desc">開發內部問卷平台系統，含編輯、回答及統計功能</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="section" id="projects">
+    <div class="container">
+      <h2 class="section-title">Projects</h2>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="card-category">Twitch</div>
+          <h3>自動回覆工具</h3>
+          <p>使用自己的帳號在 Twitch 聊天室自動回覆訊息</p>
+          <a class="card-link" href="/TwitchSelfReply/" target="_blank"><i class="fas fa-external-link-alt"></i> 開啟</a>
+        </div>
+
+        <div class="project-card">
+          <div class="card-category">Twitch</div>
+          <h3>自動發送訊息</h3>
+          <p>Twitch 聊天室自動發送訊息工具</p>
+          <a class="card-link" href="/Twitch_AutoSendMessage/" target="_blank"><i class="fas fa-external-link-alt"></i> 開啟</a>
+        </div>
+
+        <div class="project-card">
+          <div class="card-category">Twitch</div>
+          <h3>遊戲狀態更新</h3>
+          <p>自動更新 Twitch 頻道的遊戲狀態指令</p>
+          <a class="card-link" href="/Twitch_AutoGameStatusUpdate/" target="_blank"><i class="fas fa-external-link-alt"></i> 開啟</a>
+        </div>
+
+        <div class="project-card">
+          <div class="card-category">YouTube</div>
+          <h3>影片清單更新</h3>
+          <p>自動更新 YouTube 影片清單的工具</p>
+          <a class="card-link" href="/Youtube_AutoVideosUpdate/" target="_blank"><i class="fas fa-external-link-alt"></i> 開啟</a>
+        </div>
+
+        <div class="project-card">
+          <div class="card-category">Tool</div>
+          <h3>STO 數據統計</h3>
+          <p>STO 2025 數據統計與分析工具</p>
+          <a class="card-link" href="/STO2025Statistics/" target="_blank"><i class="fas fa-external-link-alt"></i> 開啟</a>
+        </div>
+
+        <div class="project-card">
+          <div class="card-category">Chrome</div>
+          <h3>Clean New Tab</h3>
+          <p>自訂新分頁背景與快捷連結的 Chrome 擴充功能</p>
+          <a class="card-link" href="https://github.com/marsantony/clean-new-tab" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section class="section" id="education">
+    <div class="container">
+      <h2 class="section-title">Education</h2>
+      <div class="education-item">
+        <h3>元智大學</h3>
+        <div class="degree">學士 ── 資訊管理</div>
+        <div class="edu-period">2005 ~ 2009</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      &copy; 2025 Mars Liu. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="/shared/nav.js"></script>
 </body>
-
 </html>
