@@ -55,32 +55,6 @@
       line-height: 1.8;
     }
 
-    .hero .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-    }
-
-    .hero .social-links a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: #d4d7dd;
-      color: #5a5f6b;
-      font-size: 1.2rem;
-      text-decoration: none;
-      box-shadow: 4px 4px 8px #b0b3b9, -4px -4px 8px #f5f6f8;
-      transition: box-shadow 0.2s, color 0.2s;
-    }
-
-    .hero .social-links a:hover {
-      box-shadow: inset 2px 2px 5px #b0b3b9, inset -2px -2px 5px #f5f6f8;
-      color: #3a3f4a;
-    }
-
     /* ── Section ── */
     .section {
       padding: 3rem 0;
@@ -189,15 +163,18 @@
     }
 
     .project-card {
+      display: block;
       padding: 1.5rem;
       border-radius: 16px;
       background: #d4d7dd;
       box-shadow: 6px 6px 12px #b0b3b9, -6px -6px 12px #f5f6f8;
       transition: box-shadow 0.2s;
+      text-decoration: none;
+      cursor: pointer;
     }
 
     .project-card:hover {
-      box-shadow: 8px 8px 16px #a8abb1, -8px -8px 16px #f5f6f8;
+      box-shadow: inset 3px 3px 6px #b0b3b9, inset -3px -3px 6px #f5f6f8;
     }
 
     .project-card .card-category {
@@ -219,27 +196,7 @@
     .project-card p {
       font-size: 0.85rem;
       color: #6a6f7b;
-      margin-bottom: 1rem;
-    }
-
-    .project-card .card-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.4rem 1rem;
-      border-radius: 8px;
-      background: #d4d7dd;
-      color: #5a5f6b;
-      text-decoration: none;
-      font-size: 0.8rem;
-      font-weight: 600;
-      box-shadow: 3px 3px 6px #b0b3b9, -3px -3px 6px #f5f6f8;
-      transition: box-shadow 0.2s, color 0.2s;
-    }
-
-    .project-card .card-link:hover {
-      box-shadow: inset 2px 2px 4px #b0b3b9, inset -2px -2px 4px #f5f6f8;
-      color: #3a3f4a;
+      margin-bottom: 0;
     }
 
     /* ── Education ── */
@@ -267,16 +224,6 @@
       color: #8a8f9a;
     }
 
-    /* ── Footer ── */
-    .footer {
-      text-align: center;
-      padding: 2rem 0;
-      font-size: 0.8rem;
-      color: #8a8f9a;
-      border-top: 1px solid #c0c3c9;
-      margin-top: 2rem;
-    }
-
     /* ── RWD ── */
     @media (max-width: 768px) {
       .projects-grid {
@@ -299,18 +246,10 @@
   <section class="hero" id="hero">
     <div class="container">
       <h1>Mars Liu</h1>
-      <div class="subtitle">Software Engineer</div>
+      <div class="subtitle">劉柏宏 ── Software Engineer</div>
       <p class="bio">
         軟體工程師，專注 .NET 網站開發，超過 13 年實戰經驗。現於金融產業打造多項線上申辦服務。熱愛解決問題，能寫程式就絕不手動，工作之餘也喜歡做些自動化小工具讓生活更輕鬆。
       </p>
-      <div class="social-links">
-        <a href="https://github.com/marsantony" target="_blank" rel="noopener" aria-label="GitHub">
-          <i class="fab fa-github"></i>
-        </a>
-        <a href="mailto:marsantonymars1017@gmail.com" aria-label="Email">
-          <i class="fas fa-envelope"></i>
-        </a>
-      </div>
     </div>
   </section>
 
@@ -403,47 +342,41 @@
       <h2 class="section-title">Projects</h2>
       <div class="projects-grid">
 
-        <div class="project-card">
+        <a class="project-card" href="/TwitchSelfReply/" target="_blank">
           <div class="card-category">Twitch</div>
           <h3>自動回覆工具</h3>
           <p>使用自己的帳號在 Twitch 聊天室自動回覆訊息</p>
-          <a class="card-link" href="/TwitchSelfReply/" target="_blank"><i class="fas fa-external-link-alt"></i> 開啟</a>
-        </div>
+        </a>
 
-        <div class="project-card">
+        <a class="project-card" href="/Twitch_AutoSendMessage/" target="_blank">
           <div class="card-category">Twitch</div>
           <h3>自動發送訊息</h3>
           <p>Twitch 聊天室自動發送訊息工具</p>
-          <a class="card-link" href="/Twitch_AutoSendMessage/" target="_blank"><i class="fas fa-external-link-alt"></i> 開啟</a>
-        </div>
+        </a>
 
-        <div class="project-card">
+        <a class="project-card" href="/Twitch_AutoGameStatusUpdate/" target="_blank">
           <div class="card-category">Twitch</div>
           <h3>遊戲狀態更新</h3>
           <p>自動更新 Twitch 頻道的遊戲狀態指令</p>
-          <a class="card-link" href="/Twitch_AutoGameStatusUpdate/" target="_blank"><i class="fas fa-external-link-alt"></i> 開啟</a>
-        </div>
+        </a>
 
-        <div class="project-card">
+        <a class="project-card" href="/Youtube_AutoVideosUpdate/" target="_blank">
           <div class="card-category">YouTube</div>
           <h3>影片清單更新</h3>
           <p>自動更新 YouTube 影片清單的工具</p>
-          <a class="card-link" href="/Youtube_AutoVideosUpdate/" target="_blank"><i class="fas fa-external-link-alt"></i> 開啟</a>
-        </div>
+        </a>
 
-        <div class="project-card">
+        <a class="project-card" href="/STO2025Statistics/" target="_blank">
           <div class="card-category">Tool</div>
           <h3>STO 數據統計</h3>
           <p>STO 2025 數據統計與分析工具</p>
-          <a class="card-link" href="/STO2025Statistics/" target="_blank"><i class="fas fa-external-link-alt"></i> 開啟</a>
-        </div>
+        </a>
 
-        <div class="project-card">
+        <a class="project-card" href="https://github.com/marsantony/clean-new-tab" target="_blank">
           <div class="card-category">Chrome</div>
           <h3>Clean New Tab</h3>
           <p>自訂新分頁背景與快捷連結的 Chrome 擴充功能</p>
-          <a class="card-link" href="https://github.com/marsantony/clean-new-tab" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-        </div>
+        </a>
 
       </div>
     </div>
@@ -461,13 +394,6 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      &copy; 2025 Mars Liu. All rights reserved.
-    </div>
-  </footer>
-
-  <script src="/shared/nav.js"></script>
+  <script src="/shared/shared.js"></script>
 </body>
 </html>
