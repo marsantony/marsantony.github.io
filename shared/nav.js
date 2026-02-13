@@ -19,22 +19,22 @@
   brand.href = '/';
   brand.textContent = 'Mars Liu';
 
-  var toggle = document.createElement('button');
-  toggle.className = 'nav-toggle';
-  toggle.setAttribute('aria-label', 'Toggle navigation');
-  toggle.innerHTML = '&#9776;';
+  inner.appendChild(brand);
 
-  var ul = document.createElement('ul');
-  ul.className = 'nav-links';
+  if (isHome) {
+    var toggle = document.createElement('button');
+    toggle.className = 'nav-toggle';
+    toggle.setAttribute('aria-label', 'Toggle navigation');
+    toggle.innerHTML = '&#9776;';
 
-  sections.forEach(function (s) {
-    var li = document.createElement('li');
-    var a = document.createElement('a');
-    a.href = s.href;
-    a.textContent = s.label;
+    var ul = document.createElement('ul');
+    ul.className = 'nav-links';
 
-    if (isHome && s.href.startsWith('/#')) {
+    sections.forEach(function (s) {
+      var li = document.createElement('li');
+      var a = document.createElement('a');
       a.href = s.href.substring(1);
+      a.textContent = s.label;
       a.addEventListener('click', function (e) {
         var target = document.querySelector(s.href.substring(1));
         if (target) {
@@ -43,19 +43,17 @@
           ul.classList.remove('open');
         }
       });
-    }
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
 
-    li.appendChild(a);
-    ul.appendChild(li);
-  });
+    toggle.addEventListener('click', function () {
+      ul.classList.toggle('open');
+    });
 
-  toggle.addEventListener('click', function () {
-    ul.classList.toggle('open');
-  });
-
-  inner.appendChild(brand);
-  inner.appendChild(toggle);
-  inner.appendChild(ul);
+    inner.appendChild(toggle);
+    inner.appendChild(ul);
+  }
   nav.appendChild(inner);
 
   document.body.insertBefore(nav, document.body.firstChild);
