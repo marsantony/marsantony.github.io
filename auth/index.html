@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twitch OAuth 登入</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://marsantony.github.io/shared/nav.css">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito Sans', sans-serif;
+      background: linear-gradient(180deg, #dcdfe4 0%, #d4d7dd 30%, #cfd2d8 70%, #c9ccd3 100%);
+      background-attachment: fixed;
+      color: #5a5f6b;
+      line-height: 1.6;
+      padding-top: 56px;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
+      text-align: center;
+    }
+
+    .card {
+      padding: 2rem;
+      border-radius: 16px;
+      background: #d4d7dd;
+      box-shadow: 6px 6px 12px #b0b3b9, -6px -6px 12px #f5f6f8;
+    }
+
+    .card h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #3a3f4a;
+      margin-bottom: 1rem;
+    }
+
+    #status {
+      font-size: 0.9rem;
+      color: #5a5f6b;
+    }
+
+    .error {
+      color: #c0392b;
+      font-weight: 600;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid #b0b3b9;
+      border-top-color: #3a6fb5;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 0.75rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="card">
+      <div class="spinner" id="spinner"></div>
+      <h2>Twitch OAuth</h2>
+      <p id="status">正在處理登入...</p>
+    </div>
+  </div>
+
+  <script src="https://marsantony.github.io/shared/twitch-auth.js"></script>
+  <script src="https://marsantony.github.io/shared/shared.js"></script>
+  <script>
+    var CLIENT_ID = '1qewxbrcvgrcpxqhqecxuitqwgjc2p';
+    var statusEl = document.getElementById('status');
+    var spinnerEl = document.getElementById('spinner');
+
+    TwitchAuth.handleCallback(CLIENT_ID)
+      .then(function (result) {
+        if (!result) {
+          spinnerEl.style.display = 'none';
+          statusEl.textContent = '沒有收到授權資訊。';
+          statusEl.className = 'error';
+          return;
+        }
+
+        statusEl.textContent = '登入成功！歡迎 ' + (result.username || '') + '，正在跳轉...';
+
+        if (result.returnUrl) {
+          setTimeout(function () {
+            location.href = result.returnUrl;
+          }, 800);
+        } else {
+          spinnerEl.style.display = 'none';
+          statusEl.textContent = '登入成功！歡迎 ' + (result.username || '') + '。你可以關閉此頁面。';
+        }
+      })
+      .catch(function (err) {
+        spinnerEl.style.display = 'none';
+        statusEl.textContent = '登入失敗：' + err.message;
+        statusEl.className = 'error';
+      });
+  </script>
+</body>
+</html>
