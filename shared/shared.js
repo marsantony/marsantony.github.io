@@ -60,4 +60,17 @@
     .then(function (html) {
       document.body.insertAdjacentHTML('beforeend', html);
     });
+
+  // Load analytics monitor
+  (function () {
+    var MONITOR_ENDPOINT = 'https://site-dashboard-api.marsantonymars1017.workers.dev';
+    var s = document.createElement('script');
+    s.src = MONITOR_ENDPOINT + '/monitor.js';
+    s.dataset.endpoint = MONITOR_ENDPOINT;
+    // Derive project name from URL path (e.g. /bot-cmd-sync/ -> bot-cmd-sync)
+    var pathParts = location.pathname.split('/').filter(Boolean);
+    s.dataset.project = pathParts[0] || 'marsantony.github.io';
+    s.defer = true;
+    document.head.appendChild(s);
+  })();
 })();
