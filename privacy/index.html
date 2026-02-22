@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="隱私權政策 - Mars Liu 個人網站">
+  <title>隱私權政策 | Mars Liu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/shared/nav.css">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito Sans', sans-serif;
+      background: linear-gradient(180deg, #dcdfe4 0%, #d4d7dd 30%, #cfd2d8 70%, #c9ccd3 100%);
+      background-attachment: fixed;
+      color: #5a5f6b;
+      line-height: 1.8;
+      padding-top: 56px;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 2rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #3a3f4a;
+      margin-bottom: 0.25rem;
+    }
+
+    .last-updated {
+      font-size: 0.82rem;
+      color: #8a8f9a;
+      margin-bottom: 2.5rem;
+    }
+
+    h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #3a3f4a;
+      margin: 2rem 0 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid #c0c3c9;
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #3a3f4a;
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    p {
+      margin-bottom: 0.75rem;
+      font-size: 0.92rem;
+    }
+
+    ul {
+      margin: 0.5rem 0 1rem 1.5rem;
+      font-size: 0.92rem;
+    }
+
+    li { margin-bottom: 0.3rem; }
+
+    a {
+      color: #3a6fb5;
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .card {
+      background: #d4d7dd;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin: 1rem 0;
+      box-shadow: 4px 4px 8px #b0b3b9, -4px -4px 8px #f5f6f8;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 0.95rem;
+    }
+
+    .card ul {
+      margin-bottom: 0;
+    }
+
+    .project-section {
+      display: none;
+    }
+
+    .project-section.active {
+      display: block;
+    }
+
+    .project-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #fff;
+      background: #3a6fb5;
+      padding: 0.15rem 0.6rem;
+      border-radius: 6px;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>隱私權政策</h1>
+  <p class="last-updated">最後更新：2026-02-22</p>
+
+  <!-- ═══ 共用區塊 ═══ -->
+
+  <h2>關於本站</h2>
+  <p>
+    本站（marsantony.github.io）及其子專案由 Mars Liu 個人經營維護。
+    本站並非營利網站，所蒐集之資料僅供網站管理者個人使用。
+  </p>
+
+  <h2>資料蒐集</h2>
+  <p>本站使用自建的輕量分析系統來了解網站流量與改善內容。此系統：</p>
+  <ul>
+    <li>不使用 Cookie</li>
+    <li>不蒐集姓名、Email 或任何可直接識別個人的資訊</li>
+    <li>不追蹤跨站瀏覽行為</li>
+  </ul>
+
+  <h3>蒐集的匿名資料</h3>
+  <div class="card">
+    <ul>
+      <li>瀏覽的頁面路徑</li>
+      <li>來源頁面（referrer）</li>
+      <li>瀏覽器類型（User-Agent）</li>
+      <li>螢幕解析度</li>
+      <li>語言設定</li>
+    </ul>
+  </div>
+
+  <h3>蒐集目的</h3>
+  <p>上述資料僅用於網站流量分析與改善使用體驗，不用於識別特定個人。</p>
+
+  <h2>IP 位址處理</h2>
+  <p>
+    您的 IP 位址會在伺服器端即時經過 SHA-256 雜湊處理，使用每日輪換的隨機鹽值（salt）。
+    雜湊後的值無法還原為原始 IP 位址。<strong>原始 IP 位址不會被儲存。</strong>
+  </p>
+
+  <h2>資料儲存與保留</h2>
+  <ul>
+    <li><strong>原始瀏覽紀錄</strong>：保留 90 天後自動刪除</li>
+    <li><strong>每日彙總統計</strong>（瀏覽量與不重複訪客數）：永久保留，不含個人資訊</li>
+  </ul>
+  <p>
+    資料處理於 Cloudflare Workers 基礎設施上，可能經由全球各地的節點處理。
+  </p>
+  <p>
+    本站託管於 GitHub Pages，GitHub 可能會蒐集伺服器日誌。
+    詳見 <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub 隱私聲明</a>。
+  </p>
+
+  <h2>第三方共享</h2>
+  <p>
+    本站蒐集的分析資料僅由網站管理者使用，<strong>不會提供、交換、出租或出售給任何第三方</strong>。
+  </p>
+
+  <h2>法律依據</h2>
+  <p>
+    依據 GDPR 第 6(1)(f) 條，本站基於「改善網站內容與使用體驗」之正當利益蒐集上述匿名資料。
+    依據台灣個人資料保護法第 8 條第 2 項第 6 款，本站之資料蒐集非基於營利目的，且對當事人顯無不利之影響。
+  </p>
+
+  <h2>您的權利</h2>
+  <p>依據台灣個人資料保護法第 3 條及 GDPR 相關規定，您享有以下權利：</p>
+  <ul>
+    <li>查詢或請求閱覽您的個人資料</li>
+    <li>請求補充或更正</li>
+    <li>請求停止蒐集、處理或利用</li>
+    <li>請求刪除</li>
+  </ul>
+  <p>
+    由於本站的分析資料已匿名化處理（IP 經不可逆雜湊），實務上可能無法識別特定個人的資料。
+    如有任何隱私相關疑問，歡迎透過 <a href="mailto:marsantonymars1017@gmail.com">Email</a> 與我聯繫。
+  </p>
+
+  <h2>不提供資料的影響</h2>
+  <p>
+    本站的分析為被動蒐集，在您瀏覽網頁時自動進行。
+    不提供上述資料不會影響您瀏覽本站的任何功能。
+  </p>
+
+  <!-- ═══ 專案特定區塊 ═══ -->
+
+  <section class="project-section" data-project="manga-translator">
+    <h2>Manga Translator<span class="project-badge">Chrome 擴充功能</span></h2>
+    <p>此擴充功能提供漫畫圖片的即時翻譯功能。除上述共用分析外，還涉及以下資料處理：</p>
+
+    <h3>額外存取的資料</h3>
+    <div class="card">
+      <ul>
+        <li>當前頁面上的漫畫圖片內容（用於文字辨識）</li>
+      </ul>
+    </div>
+
+    <h3>第三方 API 傳輸</h3>
+    <ul>
+      <li><strong>Google Cloud Vision API</strong>：圖片內容會傳送至 Google 進行 OCR 文字辨識</li>
+      <li><strong>MyMemory Translation API</strong>：辨識出的文字會傳送至 MyMemory 進行翻譯</li>
+    </ul>
+    <p>
+      上述資料僅在您主動觸發翻譯功能時傳送，不會在背景自動蒐集。
+      傳送的資料不會由本擴充功能儲存或記錄。
+      第三方服務的資料處理方式請參閱各自的隱私權政策。
+    </p>
+
+    <h3>所需權限</h3>
+    <ul>
+      <li>存取當前分頁的頁面內容（讀取圖片）</li>
+      <li>連線至 Google Cloud Vision API 及 MyMemory API</li>
+    </ul>
+  </section>
+
+  <section class="project-section" data-project="clean-new-tab">
+    <h2>Clean New Tab<span class="project-badge">Chrome 擴充功能</span></h2>
+    <p>此擴充功能提供自訂的新分頁頁面。除上述共用分析外：</p>
+
+    <h3>資料處理</h3>
+    <div class="card">
+      <ul>
+        <li>使用 Chrome Storage API 儲存您的個人化設定（背景圖片、佈局偏好等）</li>
+        <li>所有設定資料僅儲存於您的瀏覽器本機，<strong>不會傳送至任何外部伺服器</strong></li>
+      </ul>
+    </div>
+
+    <h3>所需權限</h3>
+    <ul>
+      <li><code>storage</code>：儲存使用者設定</li>
+      <li><code>unlimitedStorage</code>：允許儲存較大的背景圖片檔案</li>
+    </ul>
+  </section>
+
+  <section class="project-section" data-project="bot-cmd-sync">
+    <h2>Bot Command Sync<span class="project-badge">Web 應用</span></h2>
+    <p>此工具提供 StreamElements 與 Nightbot 的指令同步管理。除上述共用分析外：</p>
+
+    <h3>OAuth 與 API 資料</h3>
+    <div class="card">
+      <ul>
+        <li><strong>StreamElements</strong>：需要您提供 JWT Token 與 Channel ID，用於讀取及管理聊天機器人指令</li>
+        <li><strong>Nightbot</strong>：透過 OAuth 2.0（Authorization Code + PKCE）授權，存取您的自訂指令</li>
+      </ul>
+    </div>
+
+    <h3>資料處理方式</h3>
+    <ul>
+      <li>所有 Token 與授權資訊僅在您的瀏覽器中處理，<strong>不會傳送至本站伺服器</strong></li>
+      <li>API 請求直接從您的瀏覽器發送至 StreamElements / Nightbot 的伺服器</li>
+      <li>本站不儲存、記錄或轉發您的任何授權憑證</li>
+    </ul>
+  </section>
+
+  <!-- ═══ 共用尾部 ═══ -->
+
+  <h2>政策更新</h2>
+  <p>
+    本隱私權政策可能隨時更新。更新時將修改頁面頂端的「最後更新」日期。
+    建議您定期查閱本頁面以了解最新的隱私保護措施。
+  </p>
+</div>
+
+<script>
+(function () {
+  var project = new URLSearchParams(location.search).get('project');
+  if (!project) return;
+  var section = document.querySelector('[data-project="' + project + '"]');
+  if (section) section.classList.add('active');
+})();
+</script>
+<script src="/shared/shared.js"></script>
+</body>
+</html>
