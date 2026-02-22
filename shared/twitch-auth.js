@@ -8,7 +8,9 @@
   var KEY_SESSION_ID = 'Twitch_OAuthSessionId';
 
   function login(clientId, scopes) {
-    var state = Math.random().toString(36).substring(2) + Date.now().toString(36);
+    var arr = new Uint8Array(16);
+    crypto.getRandomValues(arr);
+    var state = Array.from(arr, function (b) { return b.toString(36); }).join('').substring(0, 22);
     sessionStorage.setItem(KEY_STATE, state);
     sessionStorage.setItem(KEY_RETURN_URL, location.href);
 
