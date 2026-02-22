@@ -79,11 +79,10 @@
   <script src="https://marsantony.github.io/shared/twitch-auth.js"></script>
   <script src="https://marsantony.github.io/shared/shared.js"></script>
   <script>
-    var CLIENT_ID = '1qewxbrcvgrcpxqhqecxuitqwgjc2p';
     var statusEl = document.getElementById('status');
     var spinnerEl = document.getElementById('spinner');
 
-    TwitchAuth.handleCallback(CLIENT_ID)
+    TwitchAuth.handleCallback()
       .then(function (result) {
         if (!result) {
           spinnerEl.style.display = 'none';
