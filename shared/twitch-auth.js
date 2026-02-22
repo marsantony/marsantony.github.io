@@ -1,6 +1,6 @@
 (function () {
   var REDIRECT_URI = 'https://marsantony.github.io/auth/';
-  var WORKER_URL = 'https://twitch-oauth-proxy.marsantony.workers.dev';
+  var WORKER_URL = 'https://twitch-oauth-proxy.marsantonymars1017.workers.dev';
   var KEY_TOKEN = 'Twitch_OAuthToken';
   var KEY_USERNAME = 'Twitch_OAuthUsername';
   var KEY_STATE = 'Twitch_OAuthState';
