@@ -7,6 +7,22 @@
   var KEY_RETURN_URL = 'Twitch_OAuthReturnUrl';
   var KEY_SESSION_ID = 'Twitch_OAuthSessionId';
 
+  function postJson(path, body, errorMsg, onError) {
+    return fetch(WORKER_URL + path, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    }).then(function (res) {
+      if (!res.ok) {
+        if (onError) onError(res);
+        return res.json().then(function (err) {
+          throw new Error(err.error || errorMsg);
+        });
+      }
+      return res.json();
+    });
+  }
+
   function login(clientId, scopes) {
     var arr = new Uint8Array(16);
     crypto.getRandomValues(arr);
@@ -41,19 +57,7 @@
     sessionStorage.removeItem(KEY_STATE);
     history.replaceState(null, '', location.pathname);
 
-    return fetch(WORKER_URL + '/token', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: code, redirect_uri: REDIRECT_URI }),
-    })
-      .then(function (res) {
-        if (!res.ok) {
-          return res.json().then(function (err) {
-            throw new Error(err.error || 'Token exchange failed');
-          });
-        }
-        return res.json();
-      })
+    return postJson('/token', { code: code, redirect_uri: REDIRECT_URI }, 'Token exchange failed')
       .then(function (data) {
         sessionStorage.setItem(KEY_TOKEN, data.access_token);
         if (data.username) {
@@ -75,21 +79,8 @@
     var sessionId = localStorage.getItem(KEY_SESSION_ID);
     if (!sessionId) return Promise.reject(new Error('No session'));
 
-    return fetch(WORKER_URL + '/refresh', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ session_id: sessionId }),
-    })
-      .then(function (res) {
-        if (!res.ok) {
-          if (res.status === 401) {
-            localStorage.removeItem(KEY_SESSION_ID);
-          }
-          return res.json().then(function (err) {
-            throw new Error(err.error || 'Refresh failed');
-          });
-        }
-        return res.json();
+    return postJson('/refresh', { session_id: sessionId }, 'Refresh failed', function (res) {
+        if (res.status === 401) localStorage.removeItem(KEY_SESSION_ID);
       })
       .then(function (data) {
         sessionStorage.setItem(KEY_TOKEN, data.access_token);
