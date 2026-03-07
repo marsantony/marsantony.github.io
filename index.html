@@ -11,8 +11,8 @@
   <style>
     /* ── Theme: Refined Silver Neumorphism ── */
     :root {
-      --bg: #d0d4dc;
-      --shadow-dark: #a8acb6;
+      --bg: #c8ccd6;
+      --shadow-dark: #a0a4ae;
       --shadow-light: #f0f4fc;
       --text-primary: #2a3040;
       --text-secondary: #505868;
@@ -23,7 +23,7 @@
       --neu-raised: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
       --neu-raised-sm: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light);
       --neu-pressed: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
-      --nav-bg: rgba(216, 220, 228, 0.45);
+      --nav-bg: rgba(208, 212, 222, 0.4);
       --nav-text: #2a3040;
       --nav-text-secondary: #505868;
       --footer-border: #bec2ca;
@@ -40,26 +40,18 @@
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background:
-        /* 聚光高光：左上角橢圓光斑，強化光源方向 */
-        radial-gradient(ellipse at 25% 15%, rgba(255,255,255,0.28) 0%, transparent 55%),
-        /* 交叉紋理：多角度交叉，模擬 CNC 精密銑削的刀痕 */
-        repeating-linear-gradient(
-          45deg,
-          rgba(255,255,255,0) 0px, rgba(255,255,255,0.05) 1px,
-          rgba(255,255,255,0) 2px, rgba(255,255,255,0) 5px
-        ),
+        /* 聚光高光：左上角強橢圓光斑 */
+        radial-gradient(ellipse at 20% 10%, rgba(255,255,255,0.35) 0%, transparent 50%),
+        /* 拉絲紋理：135deg 單方向密集平行線 */
         repeating-linear-gradient(
           135deg,
-          rgba(0,0,0,0) 0px, rgba(0,0,0,0.04) 1px,
-          rgba(0,0,0,0) 2px, rgba(0,0,0,0) 6px
+          rgba(255,255,255,0.12) 0px,
+          rgba(255,255,255,0) 1px,
+          rgba(0,0,0,0.08) 1px,
+          rgba(0,0,0,0) 2px
         ),
-        repeating-linear-gradient(
-          90deg,
-          rgba(255,255,255,0) 0px, rgba(255,255,255,0.03) 1px,
-          rgba(255,255,255,0) 2px, rgba(255,255,255,0) 8px
-        ),
-        /* 金屬漸層：135deg 斜角（左上亮→右下暗），高對比 */
-        linear-gradient(135deg, #e8ecf2 0%, #d8dce4 30%, #ccd0d8 55%, #b8bcc6 100%);
+        /* 金屬漸層：135deg 高對比，接近白到中灰 */
+        linear-gradient(135deg, #f0f2f6 0%, #d8dce4 25%, #c4c8d2 50%, #aeb2bc 80%, #a0a4ae 100%);
       background-attachment: fixed;
       color: var(--text-secondary);
       line-height: 1.6;
