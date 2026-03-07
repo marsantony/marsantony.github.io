@@ -6,91 +6,185 @@
   <meta name="description" content="Mars Liu - .NET 軟體工程師的個人作品集與工具入口">
   <title>Mars Liu | Software Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="/shared/nav.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
+    /* ── Theme Variables ── */
+    :root {
+      --bg-base: #0f1114;
+      --bg-surface: #1a1d23;
+      --bg-elevated: #242830;
+      --text-primary: #e4e7ec;
+      --text-secondary: #8b92a0;
+      --text-muted: #525866;
+      --accent: #6b8afd;
+      --accent-glow: rgba(107, 138, 253, 0.06);
+      --accent-hover: rgba(107, 138, 253, 0.12);
+      --border: rgba(255, 255, 255, 0.06);
+      --border-hover: rgba(107, 138, 253, 0.3);
+      --nav-bg: rgba(15, 17, 20, 0.85);
+      --nav-text: #e4e7ec;
+      --nav-text-secondary: #8b92a0;
+      --footer-border: rgba(255, 255, 255, 0.06);
+      --footer-text: #525866;
+      --footer-icon-bg: #1a1d23;
+      --footer-icon-color: #8b92a0;
+      --footer-icon-hover: #e4e7ec;
+      --footer-icon-border: rgba(255, 255, 255, 0.06);
+      --footer-link-color: #6b8afd;
+    }
+
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Nunito Sans', sans-serif;
-      background: linear-gradient(180deg, #dcdfe4 0%, #d4d7dd 30%, #cfd2d8 70%, #c9ccd3 100%);
-      background-attachment: fixed;
-      color: #5a5f6b;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-secondary);
       line-height: 1.6;
       padding-top: 56px;
+      overflow-x: hidden;
     }
 
+    /* ── Noise Texture Overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+    }
+
+    /* ── Mouse Glow ── */
+    .mouse-glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s;
+      opacity: 0;
+    }
+
+    .mouse-glow.active {
+      opacity: 1;
+    }
+
+    /* ── Container ── */
     .container {
-      max-width: 960px;
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
 
     /* ── Hero ── */
     .hero {
+      padding: 6rem 0 5rem;
       text-align: center;
-      padding: 4rem 0 3rem;
-      background: radial-gradient(ellipse at 50% 40%, rgba(245, 246, 248, 0.4) 0%, transparent 70%);
     }
 
     .hero h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #3a3f4a;
-      margin-bottom: 0.25rem;
+      font-size: 2.75rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.02em;
+      margin-bottom: 0.5rem;
     }
 
     .hero .subtitle {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #5a5f6b;
-      margin-bottom: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 2rem;
     }
 
     .hero .bio {
-      max-width: 600px;
-      margin: 0 auto 1.5rem;
-      font-size: 0.95rem;
-      line-height: 1.8;
+      max-width: 560px;
+      margin: 0 auto;
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+    }
+
+    .hero-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .hero-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 1rem;
+      text-decoration: none;
+      transition: color 0.25s, border-color 0.25s;
+    }
+
+    .hero-links a:hover {
+      color: var(--text-primary);
+      border-color: var(--border-hover);
     }
 
     /* ── Section ── */
     .section {
-      padding: 3rem 0;
+      padding: 5rem 0;
     }
 
-    .section:nth-child(even) {
-      background: linear-gradient(180deg, transparent 0%, rgba(192, 195, 201, 0.15) 50%, transparent 100%);
-    }
-
-    .section-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #3a3f4a;
-      margin-bottom: 2rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #c0c3c9;
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
     }
 
     /* ── Skills ── */
     .skills-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.75rem;
     }
 
     .skill-tag {
-      padding: 0.6rem 1.25rem;
-      border-radius: 12px;
-      background: #d4d7dd;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #3a3f4a;
-      box-shadow: 3px 3px 6px #b0b3b9, -3px -3px 6px #f5f6f8;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      transition: border-color 0.25s, color 0.25s;
     }
 
-    /* ── Experience ── */
+    .skill-tag:hover {
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+    }
+
+    /* ── Experience Timeline ── */
     .timeline {
       position: relative;
       padding-left: 2rem;
@@ -99,165 +193,258 @@
     .timeline::before {
       content: '';
       position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: #c0c3c9;
+      left: 3px;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: var(--border);
     }
 
     .timeline-item {
       position: relative;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
     }
 
     .timeline-item::before {
       content: '';
       position: absolute;
       left: -2rem;
-      top: 0.5rem;
-      width: 10px;
-      height: 10px;
+      top: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      background: #8a8f9a;
-      border: 2px solid #d4d7dd;
-      transform: translateX(-4px);
+      background: var(--text-muted);
+      transition: background 0.25s, box-shadow 0.25s;
+    }
+
+    .timeline-item:hover::before {
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(107, 138, 253, 0.4);
     }
 
     .timeline-item .period {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #8a8f9a;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
       margin-bottom: 0.25rem;
     }
 
     .timeline-item .company {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #3a3f4a;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
       margin-bottom: 0.15rem;
     }
 
     .timeline-item .role {
       font-size: 0.85rem;
-      font-weight: 600;
-      color: #5a5f6b;
-      margin-bottom: 0.25rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 0.35rem;
     }
 
     .timeline-item .desc {
-      font-size: 0.9rem;
-      color: #6a6f7b;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
     }
 
     .timeline-item .affiliation {
       font-size: 0.8rem;
-      color: #8a8f9a;
+      color: var(--text-muted);
     }
 
     /* ── Projects ── */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
     }
 
     .project-card {
       display: block;
       padding: 1.5rem;
-      border-radius: 16px;
-      background: #d4d7dd;
-      box-shadow: 6px 6px 12px #b0b3b9, -6px -6px 12px #f5f6f8;
-      transition: box-shadow 0.2s;
+      border-radius: 4px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
       text-decoration: none;
       cursor: pointer;
+      transition: border-color 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      background: radial-gradient(
+        600px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%),
+        var(--accent-hover) 0%,
+        transparent 40%
+      );
+      pointer-events: none;
     }
 
     .project-card:hover {
-      box-shadow: inset 3px 3px 6px #b0b3b9, inset -3px -3px 6px #f5f6f8;
+      border-color: var(--border-hover);
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-card > * {
+      position: relative;
+      z-index: 1;
     }
 
     .project-card .card-category {
-      font-size: 0.75rem;
-      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 500;
       text-transform: uppercase;
-      color: #8a8f9a;
-      letter-spacing: 1px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
       margin-bottom: 0.5rem;
     }
 
     .project-card h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #3a3f4a;
-      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
     }
 
     .project-card p {
-      font-size: 0.85rem;
-      color: #6a6f7b;
-      margin-bottom: 0;
+      font-size: 0.825rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin: 0;
     }
 
     /* ── Education ── */
     .education-item {
       padding: 1.5rem;
-      border-radius: 16px;
-      background: #d4d7dd;
-      box-shadow: 6px 6px 12px #b0b3b9, -6px -6px 12px #f5f6f8;
+      border-radius: 4px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      display: inline-block;
     }
 
     .education-item h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #3a3f4a;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
       margin-bottom: 0.25rem;
     }
 
     .education-item .degree {
-      font-size: 0.9rem;
-      color: #5a5f6b;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
     }
 
     .education-item .edu-period {
-      font-size: 0.8rem;
-      color: #8a8f9a;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* ── Scroll Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Staggered children ── */
+    .stagger > * {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .stagger.visible > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Reduced Motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .stagger > * {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .mouse-glow { display: none; }
     }
 
     /* ── RWD ── */
     @media (max-width: 768px) {
-      .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .hero h1 { font-size: 2rem; }
+      .hero { padding: 4rem 0 3rem; }
+      .hero h1 { font-size: 2.2rem; }
+      .section { padding: 3.5rem 0; }
     }
 
     @media (max-width: 480px) {
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
-      .hero h1 { font-size: 1.6rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.8rem; }
+      .hero .bio { font-size: 0.925rem; }
+      .section { padding: 3rem 0; }
     }
   </style>
 </head>
 <body>
 
+  <div class="mouse-glow" id="mouseGlow"></div>
+
   <!-- Hero -->
   <section class="hero" id="hero">
     <div class="container">
-      <h1>Mars Liu</h1>
-      <div class="subtitle">劉柏宏 ── Software Engineer</div>
-      <p class="bio">
-        軟體工程師，專注 .NET 網站開發，超過 13 年實戰經驗。現於金融產業打造多項線上申辦服務。熱愛解決問題，能寫程式就絕不手動，工作之餘也喜歡做些自動化小工具讓生活更輕鬆。
-      </p>
+      <div class="reveal">
+        <h1>Mars Liu</h1>
+        <div class="subtitle">software engineer // .net // 13+ yrs</div>
+        <p class="bio">
+          專注 .NET 網站開發，現於金融產業打造多項線上申辦服務。熱愛解決問題，能寫程式就絕不手動，工作之餘也喜歡做些自動化小工具讓生活更輕鬆。
+        </p>
+      </div>
+      <div class="hero-links reveal">
+        <a href="https://github.com/marsantony" target="_blank" rel="noopener" aria-label="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="mailto:marsantonymars1017@gmail.com" aria-label="Email">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a href="https://www.instagram.com/bohungliu/" target="_blank" rel="noopener" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/BoHungLiu/" target="_blank" rel="noopener" aria-label="Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- Skills -->
   <section class="section" id="skills">
     <div class="container">
-      <h2 class="section-title">Skills</h2>
-      <div class="skills-grid">
+      <div class="section-label reveal">Skills</div>
+      <div class="skills-grid stagger">
         <span class="skill-tag">C#</span>
         <span class="skill-tag">ASP.NET Web Forms</span>
         <span class="skill-tag">ASP.NET MVC</span>
@@ -273,33 +460,33 @@
   <!-- Experience -->
   <section class="section" id="experience">
     <div class="container">
-      <h2 class="section-title">Experience</h2>
-      <div class="timeline">
+      <div class="section-label reveal">Experience</div>
+      <div class="timeline reveal">
 
         <div class="timeline-item">
           <div class="period">2017.07 ~ 現在</div>
-          <div class="company">國泰世華銀行<span class="affiliation">｜德義資訊派駐</span></div>
+          <div class="company">國泰世華銀行<span class="affiliation"> / 德義資訊派駐</span></div>
           <div class="role">軟體工程師</div>
           <div class="desc">負責行動版官網、信用卡申辦、線上分期、預約開戶、信用貸款等多項線上申辦系統開發</div>
         </div>
 
         <div class="timeline-item">
           <div class="period">2016.09 ~ 2017.06</div>
-          <div class="company">叡揚資訊<span class="affiliation">｜德義資訊派駐</span></div>
+          <div class="company">叡揚資訊<span class="affiliation"> / 德義資訊派駐</span></div>
           <div class="role">軟體工程師</div>
           <div class="desc">開發電子公文系統 SPEED 3.0</div>
         </div>
 
         <div class="timeline-item">
           <div class="period">2015.10 ~ 2016.06</div>
-          <div class="company">Atos<span class="affiliation">｜德義資訊派駐</span></div>
+          <div class="company">Atos<span class="affiliation"> / 德義資訊派駐</span></div>
           <div class="role">軟體工程師</div>
           <div class="desc">開發燦星旅遊網 ERP 2.0</div>
         </div>
 
         <div class="timeline-item">
           <div class="period">2014.07 ~ 2015.09</div>
-          <div class="company">大同<span class="affiliation">｜德義資訊派駐</span></div>
+          <div class="company">大同<span class="affiliation"> / 德義資訊派駐</span></div>
           <div class="role">軟體工程師</div>
           <div class="desc">開發交通部鐵路管理局整合性策略成本管理資訊系統</div>
         </div>
@@ -320,7 +507,7 @@
 
         <div class="timeline-item">
           <div class="period">2011.10 ~ 2013.01</div>
-          <div class="company">叡揚資訊<span class="affiliation">｜億力資訊派駐</span></div>
+          <div class="company">叡揚資訊<span class="affiliation"> / 億力資訊派駐</span></div>
           <div class="role">軟體工程師</div>
           <div class="desc">開發行政院計畫管理資訊網，將 ASP 1.0 版本改寫為 ASP.NET</div>
         </div>
@@ -339,8 +526,8 @@
   <!-- Projects -->
   <section class="section" id="projects">
     <div class="container">
-      <h2 class="section-title">Projects</h2>
-      <div class="projects-grid">
+      <div class="section-label reveal">Projects</div>
+      <div class="projects-grid stagger">
 
         <a class="project-card" href="/TwitchSelfReply/" target="_blank">
           <div class="card-category">Twitch</div>
@@ -383,6 +570,12 @@
           <h3>定時發話工具</h3>
           <p>使用自己的帳號定時自動發送多則訊息到 Twitch 聊天室</p>
         </a>
+
+        <a class="project-card" href="/bot-cmd-sync/" target="_blank">
+          <div class="card-category">Tool</div>
+          <h3>Bot 指令同步</h3>
+          <p>StreamElements 與 Nightbot 指令同步管理面板</p>
+        </a>
       </div>
     </div>
   </section>
@@ -390,15 +583,69 @@
   <!-- Education -->
   <section class="section" id="education">
     <div class="container">
-      <h2 class="section-title">Education</h2>
-      <div class="education-item">
-        <h3>元智大學</h3>
-        <div class="degree">學士 ── 資訊管理</div>
-        <div class="edu-period">2005 ~ 2009</div>
+      <div class="section-label reveal">Education</div>
+      <div class="reveal">
+        <div class="education-item">
+          <h3>元智大學</h3>
+          <div class="degree">學士 — 資訊管理</div>
+          <div class="edu-period">2005 ~ 2009</div>
+        </div>
       </div>
     </div>
   </section>
 
   <script src="/shared/shared.js"></script>
+  <script>
+    // ── Mouse Glow ──
+    (function () {
+      var glow = document.getElementById('mouseGlow');
+      var active = false;
+
+      document.addEventListener('mousemove', function (e) {
+        if (!active) {
+          glow.classList.add('active');
+          active = true;
+        }
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+      });
+
+      document.addEventListener('mouseleave', function () {
+        glow.classList.remove('active');
+        active = false;
+      });
+
+      // Card internal glow: track mouse position relative to card
+      document.querySelectorAll('.project-card').forEach(function (card) {
+        card.addEventListener('mousemove', function (e) {
+          var rect = card.getBoundingClientRect();
+          card.style.setProperty('--card-mouse-x', (e.clientX - rect.left) + 'px');
+          card.style.setProperty('--card-mouse-y', (e.clientY - rect.top) + 'px');
+        });
+      });
+    })();
+
+    // ── Scroll Reveal ──
+    (function () {
+      var reveals = document.querySelectorAll('.reveal, .stagger');
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            // Stagger children with delay
+            if (entry.target.classList.contains('stagger')) {
+              var children = entry.target.children;
+              for (var i = 0; i < children.length; i++) {
+                children[i].style.transitionDelay = (i * 60) + 'ms';
+              }
+            }
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      reveals.forEach(function (el) { observer.observe(el); });
+    })();
+  </script>
 </body>
 </html>
