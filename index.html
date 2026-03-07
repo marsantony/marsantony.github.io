@@ -12,8 +12,8 @@
     /* ── Theme: Refined Silver Neumorphism ── */
     :root {
       --bg: #d0d4dc;
-      --shadow-dark: #adb1b9;
-      --shadow-light: #edf1f9;
+      --shadow-dark: #a8acb6;
+      --shadow-light: #f0f4fc;
       --text-primary: #2a3040;
       --text-secondary: #505868;
       --text-muted: #808898;
@@ -23,7 +23,7 @@
       --neu-raised: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
       --neu-raised-sm: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light);
       --neu-pressed: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
-      --nav-bg: rgba(200, 204, 212, 0.88);
+      --nav-bg: rgba(216, 220, 228, 0.85);
       --nav-text: #2a3040;
       --nav-text-secondary: #505868;
       --footer-border: #bec2ca;
@@ -40,24 +40,26 @@
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background:
-        /* 拉絲紋理：三組不同間距的半透明條紋疊加 */
+        /* 聚光高光：左上角橢圓光斑，強化光源方向 */
+        radial-gradient(ellipse at 25% 15%, rgba(255,255,255,0.25) 0%, transparent 60%),
+        /* 拉絲紋理：三組不同間距的半透明條紋，opacity 提高 */
         repeating-linear-gradient(
           180deg,
-          rgba(255,255,255,0) 0px, rgba(255,255,255,0.04) 1px,
+          rgba(255,255,255,0) 0px, rgba(255,255,255,0.07) 1px,
           rgba(255,255,255,0) 2px, rgba(255,255,255,0) 3px
         ),
         repeating-linear-gradient(
           180deg,
-          rgba(0,0,0,0) 0px, rgba(0,0,0,0.025) 1px,
+          rgba(0,0,0,0) 0px, rgba(0,0,0,0.04) 1px,
           rgba(0,0,0,0) 2px, rgba(0,0,0,0) 5px
         ),
         repeating-linear-gradient(
           180deg,
-          rgba(255,255,255,0) 0px, rgba(255,255,255,0.02) 1px,
+          rgba(255,255,255,0) 0px, rgba(255,255,255,0.03) 1px,
           rgba(255,255,255,0) 2px, rgba(255,255,255,0) 7px
         ),
-        /* 金屬漸層底色：模擬弧形金屬板的光線反射 */
-        linear-gradient(180deg, #bcc0c8 0%, #d8dce4 35%, #e0e3e9 50%, #d4d8e0 70%, #c8ccd4 100%);
+        /* 金屬漸層：135deg 斜角（左上亮→右下暗），高對比 */
+        linear-gradient(135deg, #e8ecf2 0%, #d8dce4 30%, #ccd0d8 55%, #b8bcc6 100%);
       background-attachment: fixed;
       color: var(--text-secondary);
       line-height: 1.6;
