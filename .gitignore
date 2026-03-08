@@ -364,3 +364,5 @@ FodyWeavers.xsd
 
 # Test coverage output
 coverage/
+# Claude Code working files
+tasks/
