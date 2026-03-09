@@ -147,8 +147,80 @@
     return Promise.resolve();
   }
 
+  var dialogInjected = false;
+
+  function showLoginDialog(clientId, scopes) {
+    if (!dialogInjected) {
+      var style = document.createElement('style');
+      style.textContent =
+        '.twauth-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.35);' +
+        'display:flex;align-items:center;justify-content:center;z-index:1000;' +
+        'opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s,visibility .25s}' +
+        '.twauth-overlay.active{opacity:1;visibility:visible;pointer-events:auto;backdrop-filter:blur(6px)}' +
+        '.twauth-dialog{width:360px;max-width:calc(100vw - 2rem);border-radius:14px;' +
+        'background:var(--bg);box-shadow:var(--neu-raised);padding:1.5rem;' +
+        'transform:translateY(8px);transition:transform .25s}' +
+        '.twauth-overlay.active .twauth-dialog{transform:translateY(0)}' +
+        '.twauth-dialog h3{font-size:1rem;font-weight:600;color:var(--text-primary);margin-bottom:.5rem}' +
+        '.twauth-dialog p{font-size:.85rem;color:var(--text-secondary);margin-bottom:1.25rem;line-height:1.6}' +
+        '.twauth-checkbox{display:flex;align-items:center;gap:.6rem;margin-bottom:1.25rem;' +
+        'padding:.6rem .75rem;border-radius:10px;background:var(--bg);' +
+        'box-shadow:var(--neu-pressed);cursor:pointer}' +
+        '.twauth-checkbox input[type="checkbox"]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer;flex-shrink:0}' +
+        '.twauth-checkbox span{font-size:.83rem;color:var(--text-primary);font-weight:500;user-select:none}' +
+        '.twauth-actions{display:flex;gap:.75rem;justify-content:flex-end}';
+      document.head.appendChild(style);
+
+      var overlay = document.createElement('div');
+      overlay.className = 'twauth-overlay';
+      overlay.id = 'twauthModal';
+      overlay.setAttribute('role', 'dialog');
+      overlay.setAttribute('aria-modal', 'true');
+      overlay.setAttribute('aria-labelledby', 'twauthTitle');
+      overlay.innerHTML =
+        '<div class="twauth-dialog">' +
+          '<h3 id="twauthTitle">前往 Twitch 授權</h3>' +
+          '<p>即將跳轉到 Twitch 進行登入授權，授權後會自動返回本頁面。</p>' +
+          '<label class="twauth-checkbox">' +
+            '<input type="checkbox" id="twauthRemember">' +
+            '<span>記住我的登入狀態</span>' +
+          '</label>' +
+          '<div class="twauth-actions">' +
+            '<button type="button" class="btn" id="twauthCancel">取消</button>' +
+            '<button type="button" class="btn btn-primary" id="twauthConfirm">前往授權</button>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(overlay);
+
+      function close() { overlay.classList.remove('active'); }
+
+      document.getElementById('twauthCancel').addEventListener('click', close);
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) close();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) close();
+      });
+
+      dialogInjected = true;
+    }
+
+    var overlay = document.getElementById('twauthModal');
+    document.getElementById('twauthRemember').checked = false;
+    overlay.classList.add('active');
+
+    var confirmBtn = document.getElementById('twauthConfirm');
+    var newBtn = confirmBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
+    newBtn.addEventListener('click', function () {
+      var remember = document.getElementById('twauthRemember').checked;
+      login(clientId, scopes, { rememberMe: remember });
+    });
+  }
+
   window.TwitchAuth = {
     login: login,
+    showLoginDialog: showLoginDialog,
     handleCallback: handleCallback,
     refreshToken: refreshToken,
     tryRestore: tryRestore,
