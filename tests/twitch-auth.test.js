@@ -221,7 +221,32 @@ describe('TwitchAuth', () => {
       expect(sessionStorage.getItem('Twitch_OAuthToken')).toBe('new-token');
       expect(sessionStorage.getItem('Twitch_OAuthUsername')).toBe('testuser');
       expect(localStorage.getItem('Twitch_OAuthUsername')).toBe('testuser');
+      expect(sessionStorage.getItem('Twitch_OAuthSessionId')).toBe('sess-123');
+    });
+
+    it('stores session_id in localStorage when rememberMe is set', async () => {
+      const mockState = 'matching-state';
+      sessionStorage.setItem('Twitch_OAuthState', mockState);
+      sessionStorage.setItem('Twitch_OAuthRemember', '1');
+      window.location.search = `?code=auth-code-123&state=${mockState}`;
+
+      vi.stubGlobal(
+        'fetch',
+        vi.fn().mockResolvedValue({
+          ok: true,
+          json: () =>
+            Promise.resolve({
+              access_token: 'new-token',
+              username: 'testuser',
+              session_id: 'sess-123',
+            }),
+        })
+      );
+
+      await window.TwitchAuth.handleCallback();
+
       expect(localStorage.getItem('Twitch_OAuthSessionId')).toBe('sess-123');
+      expect(sessionStorage.getItem('Twitch_OAuthSessionId')).toBeNull();
     });
 
     it('cleans URL params with history.replaceState', async () => {
