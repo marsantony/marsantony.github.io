@@ -6,6 +6,7 @@
   var KEY_STATE = 'Twitch_OAuthState';
   var KEY_RETURN_URL = 'Twitch_OAuthReturnUrl';
   var KEY_SESSION_ID = 'Twitch_OAuthSessionId';
+  var KEY_REMEMBER = 'Twitch_OAuthRemember';
 
   function postJson(path, body, errorMsg, onError) {
     return fetch(WORKER_URL + path, {
@@ -23,7 +24,10 @@
     });
   }
 
-  function login(clientId, scopes) {
+  function login(clientId, scopes, options) {
+    var rememberMe = options && options.rememberMe;
+    sessionStorage.setItem(KEY_REMEMBER, rememberMe ? '1' : '0');
+
     var arr = new Uint8Array(16);
     crypto.getRandomValues(arr);
     var state = Array.from(arr, function (b) { return b.toString(36); }).join('').substring(0, 22);
@@ -57,6 +61,9 @@
     sessionStorage.removeItem(KEY_STATE);
     history.replaceState(null, '', location.pathname);
 
+    var rememberMe = sessionStorage.getItem(KEY_REMEMBER) === '1';
+    sessionStorage.removeItem(KEY_REMEMBER);
+
     return postJson('/token', { code: code, redirect_uri: REDIRECT_URI }, 'Token exchange failed')
       .then(function (data) {
         sessionStorage.setItem(KEY_TOKEN, data.access_token);
@@ -65,7 +72,8 @@
           localStorage.setItem(KEY_USERNAME, data.username);
         }
         if (data.session_id) {
-          localStorage.setItem(KEY_SESSION_ID, data.session_id);
+          var sessionIdStorage = rememberMe ? localStorage : sessionStorage;
+          sessionIdStorage.setItem(KEY_SESSION_ID, data.session_id);
         }
 
         var returnUrl = sessionStorage.getItem(KEY_RETURN_URL);
@@ -75,12 +83,21 @@
       });
   }
 
+  function getSessionId() {
+    return localStorage.getItem(KEY_SESSION_ID) || sessionStorage.getItem(KEY_SESSION_ID) || '';
+  }
+
+  function clearSessionId() {
+    localStorage.removeItem(KEY_SESSION_ID);
+    sessionStorage.removeItem(KEY_SESSION_ID);
+  }
+
   function refreshToken() {
-    var sessionId = localStorage.getItem(KEY_SESSION_ID);
+    var sessionId = getSessionId();
     if (!sessionId) return Promise.reject(new Error('No session'));
 
     return postJson('/refresh', { session_id: sessionId }, 'Refresh failed', function (res) {
-        if (res.status === 401) localStorage.removeItem(KEY_SESSION_ID);
+        if (res.status === 401) clearSessionId();
       })
       .then(function (data) {
         sessionStorage.setItem(KEY_TOKEN, data.access_token);
@@ -94,7 +111,7 @@
     var token = sessionStorage.getItem(KEY_TOKEN);
     if (token) return Promise.resolve({ token: token, username: getUsername() });
 
-    var sessionId = localStorage.getItem(KEY_SESSION_ID);
+    var sessionId = getSessionId();
     if (!sessionId) return Promise.resolve(false);
 
     return refreshToken();
@@ -109,15 +126,15 @@
   }
 
   function isLoggedIn() {
-    return !!sessionStorage.getItem(KEY_TOKEN) || !!localStorage.getItem(KEY_SESSION_ID);
+    return !!sessionStorage.getItem(KEY_TOKEN) || !!getSessionId();
   }
 
   function logout() {
-    var sessionId = localStorage.getItem(KEY_SESSION_ID);
+    var sessionId = getSessionId();
 
     sessionStorage.removeItem(KEY_TOKEN);
     sessionStorage.removeItem(KEY_USERNAME);
-    localStorage.removeItem(KEY_SESSION_ID);
+    clearSessionId();
     localStorage.removeItem(KEY_USERNAME);
 
     if (sessionId) {
@@ -145,6 +162,7 @@
     KEY_USERNAME: KEY_USERNAME,
     KEY_STATE: KEY_STATE,
     KEY_RETURN_URL: KEY_RETURN_URL,
-    KEY_SESSION_ID: KEY_SESSION_ID
+    KEY_SESSION_ID: KEY_SESSION_ID,
+    KEY_REMEMBER: KEY_REMEMBER
   };
 })();
