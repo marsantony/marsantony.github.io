@@ -1,0 +1,42 @@
+/* ──────────────────────────────────────────────
+   Design Tokens — Refined Silver Neumorphism
+   首頁 (index.html) 使用的設計系統變數。
+   新頁面想對齊首頁風格，引入此檔即可：
+     <link rel="stylesheet" href="/shared/tokens.css">
+   ────────────────────────────────────────────── */
+
+:root {
+  /* Surface & shadow */
+  --bg: #c8ccd6;
+  --shadow-dark: #a0a4ae;
+  --shadow-light: #f0f4fc;
+
+  /* Text */
+  --text-primary: #2a3040;
+  --text-secondary: #505868;
+  --text-muted: #808898;
+
+  /* Accent */
+  --accent: #5a7aed;
+  --accent-glow: rgba(90, 122, 237, 0.10);
+  --accent-hover: rgba(90, 122, 237, 0.08);
+
+  /* Neumorphism shadow presets */
+  --neu-raised: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+  --neu-raised-sm: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light);
+  --neu-pressed: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+
+  /* Navigation */
+  --nav-bg: rgba(208, 212, 222, 0.4);
+  --nav-text: var(--text-primary);
+  --nav-text-secondary: var(--text-secondary);
+
+  /* Footer */
+  --footer-border: #bec2ca;
+  --footer-text: var(--text-muted);
+  --footer-icon-bg: var(--bg);
+  --footer-icon-color: var(--text-secondary);
+  --footer-icon-hover: var(--text-primary);
+  --footer-icon-border: transparent;
+  --footer-link-color: var(--accent);
+}
